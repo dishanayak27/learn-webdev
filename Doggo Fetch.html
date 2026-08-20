@@ -234,6 +234,15 @@
     function getMultipleChoices(n, correctAnswer, array) {
       // Use a while loop and the getRandomElement() function
       // Make sure there are no duplicates in the array
+      const choices = [];
+      choices.push(correctAnswer);
+      while (choices.length < n) {
+        let otherOption = getRandomElement(array);
+        if (!choices.includes(otherOption)) {
+          choices.push(otherOption);
+        }
+      }
+      return choices;
     }
 
     // TODO 2
@@ -242,13 +251,21 @@
     function getBreedFromURL(url) {
       // The string method .split(char) may come in handy
       // Try to use destructuring as much as you can
+      let unformattedBreedName = url.split("/")[4];
+      let formattedBreedName = unformattedBreedName.split("-").reverse();
+      let dogBreed = formattedBreedName.join(" ").trim();
+      return dogBreed;
     }
 
     // TODO 3
     // Given a URL, fetch the resource at that URL,
     // then parse the response as a JSON object,
     // finally return the "message" property of its body
-    async function fetchMessage(url) {}
+    async function fetchMessage(url) {
+      const response = await fetch(url);
+      const { message } = await response.json();
+      return message;
+    }
 
     // Function to add the multiple-choice buttons to the page
     function renderButtons(choicesArray, correctAnswer) {
